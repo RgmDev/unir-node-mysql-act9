@@ -11,6 +11,9 @@ var http = require('http');
 // Load environment
 require('dotenv').config();
 
+// Load database config
+require('../config/db');
+
 /**
  * Get port from environment and store in Express.
  */
