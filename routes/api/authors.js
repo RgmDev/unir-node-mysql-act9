@@ -19,7 +19,6 @@ router.get('/:authorId', async (req, res, next) => {
   try {
     const { authorId } = req.params;
     const author = await getById(parseInt(authorId));
-    console.log(author)
     if(author) {
       res.json(author);
     } else {
@@ -48,6 +47,7 @@ router.put('/:authorId', async (req, res) => {
     let changes = getChangesForUpdate(req.body, ['name', 'email', 'image']);
     if (changes.length === 0) {
       res.status(400).json({ error: "No changes detected" });
+      return;
     } 
     const result = await updateById(authorId, changes);
     const authorUpdated = await getById(authorId);
