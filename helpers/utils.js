@@ -17,4 +17,14 @@ const executeQueryOne = (sql, params = []) => {
   });
 }
 
-module.exports = { executeQuery, executeQueryOne };
+function getChangesForUpdate(body, keys = []) {
+  let changes = [];
+  for (const [key, value] of Object.entries(body)) {
+    if (keys.indexOf(key) > -1) {
+      changes.push([key, value]);
+    }
+  }
+  return changes;
+}
+
+module.exports = { executeQuery, executeQueryOne, getChangesForUpdate };

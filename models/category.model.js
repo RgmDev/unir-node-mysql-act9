@@ -17,7 +17,7 @@ const updateById = (categoryId, description) => {
 }
 
 const deleteById = (categoryId) => {
-    return executeQuery('delete from categories where id = ?', [categoryId]);
+  return executeQuery('delete from categories where id = ?', [categoryId]);
 }
 
 module.exports = {
