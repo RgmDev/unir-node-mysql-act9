@@ -1,7 +1,35 @@
 extends layout
 
 block content
-  h1= title
-  p Bienvenido a #{title}
-  p Gestión de posts, autores y categorias
-  p Para más información revise el documento readme.md
+
+  div(class='jumbotron bg-light p-5')
+    h1(class='display-3') #{title}
+    p(class='lead') Manage blog data (posts, authors and categories)
+    hr(class='my-4')
+    p(class='lead')
+      a(class='btn btn-primary btn-lg', href='https://github.com/RgmDev/unir-node-mysql-act9', role='button', target='_blank') GitHub
+
+  div(class='mt-5')
+    h2(class='display-4') Endpoint list
+    h3 Posts 
+    ul 
+      li GET /api/posts
+      li GET /api/posts/:postId
+      li GET /api/posts/author/:authorId
+      li POST /api/posts
+      li PUT /api/posts/:postId
+      li DELETE /api/posts/:postId
+    h3 Authors 
+    ul 
+      li GET /api/authors
+      li GET /api/authors/:authorId
+      li POST /api/authors
+      li PUT /api/authors/:authorId
+      li DELETE /api/authors/:authorId
+    h3 Categories
+    ul 
+      li GET /api/categories
+      li GET /api/categories/:categoryId
+      li POST /api/categories
+      li PUT /api/categories/:categoryId
+      li DELETE /api/categories/:categoryId
