@@ -21,7 +21,9 @@ npm install
 
 3. Import database dump
 In Mysql Workbench Server -> Data Import
+
 Select __Import from Self-Contained File__ and __database/dump_blog.sql__ file
+
 Click in __Start import__
 
 4. Create .env file
@@ -42,9 +44,13 @@ npm run dev
 6. Access to [localhost:3000](http://localhost:3000)
 
 [Optional]
+
 7. Import postman collection and environment
+
 In Postman click on __Import__ 
+
 Select __postman/Blog.postman_collection.json__ and __postman/Blog.postman_environment.json__ files
+
 Click __Import__ button
 
 ## Author
