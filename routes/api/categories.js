@@ -4,7 +4,7 @@ var router = express.Router();
 const { getAll, getById, create, updateById, deleteById } = require('../../models/category.model');
 
 /* GET categories listing. */
-router.get('/', async (req, res, next) => {
+router.get('/', async (req, res) => {
   try {
     const categories = await getAll();
     res.json(categories);
@@ -14,7 +14,7 @@ router.get('/', async (req, res, next) => {
 });
 
 /* GET category info. */
-router.get('/:categoryId', async (req, res, next) => {
+router.get('/:categoryId', async (req, res) => {
   try {
     const { categoryId } = req.params;
     const category = await getById(parseInt(categoryId));

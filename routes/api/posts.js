@@ -4,13 +4,18 @@ var router = express.Router();
 const { getByPage, getById, getByAuthorId, create, updateById, deleteById } = require('../../models/post.model');
 const { getById: authorById } = require('../../models/author.model');
 const { getById: categoryById } = require('../../models/category.model');
-const { getChangesForUpdate } = require('../../helpers/utils');
+const { getChangesForUpdate, formatDate  } = require('../../helpers/utils');
 
 /* GET posts listing. */
-router.get('/', async (req, res, next) => {
+router.get('/', async (req, res) => {
   try {
     const { page = 1, limit = 10 } = req.query;
     const posts = await getByPage(parseInt(page), parseInt(limit));
+    for(let post of posts) {
+      post.author = await authorById(post.authors_id);
+      post.category = await categoryById(post.categories_id);
+      post.post_date = formatDate(post.post_date);
+    }
     res.json(posts);
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -18,11 +23,14 @@ router.get('/', async (req, res, next) => {
 });
 
 /* GET post info. */
-router.get('/:postId', async (req, res, next) => {
+router.get('/:postId', async (req, res) => {
   try {
     const { postId } = req.params;
     const post = await getById(parseInt(postId));
     if(post) {
+      post.author = await authorById(post.authors_id);
+      post.category = await categoryById(post.categories_id);
+      post.post_date = formatDate(post.post_date);
       res.json(post);
     } else {
       res.status(400).json({ error: "postId doesn't exist" });
@@ -33,7 +41,7 @@ router.get('/:postId', async (req, res, next) => {
 });
 
 /* GET posts by author. */
-router.get('/author/:authorId', async (req, res, next) => {
+router.get('/author/:authorId', async (req, res) => {
   try {
     const { authorId } = req.params;
     // Validate authors_id
@@ -45,6 +53,11 @@ router.get('/author/:authorId', async (req, res, next) => {
     // Get posts by author
     const posts = await getByAuthorId(parseInt(authorId));
     if(posts) {
+      for(let post of posts) {
+        post.author = await authorById(post.authors_id);
+        post.category = await categoryById(post.categories_id);
+        post.post_date = formatDate(post.post_date);
+      }
       res.json(posts);
     } else {
       res.status(400).json({ error: 'There is no posts for author id: ' + authorId});
@@ -55,7 +68,7 @@ router.get('/author/:authorId', async (req, res, next) => {
 });
 
 /* POST create post. */
-router.post('/', async (req, res, next) => {
+router.post('/', async (req, res) => {
   try {
     // Validate authors_id
     const author = await authorById(req.body.authors_id);
@@ -79,7 +92,7 @@ router.post('/', async (req, res, next) => {
 });
 
 /* PUT update post. */
-router.put('/:postId', async (req, res, next) => {
+router.put('/:postId', async (req, res) => {
   try {
     const { postId } = req.params;
     // Get validate changes 

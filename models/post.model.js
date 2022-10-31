@@ -1,11 +1,15 @@
 const { executeQuery, executeQueryOne } = require('../helpers/utils');
 
 const getByPage = (page, limit) => {
-  return executeQuery('select p.*, a.name as author_name, a.email as author_email, a.image as author_image from posts p left join authors a on p.authors_id = a.id limit ? offset ?', [limit, (page - 1) * limit]);
+  return executeQuery('select * from posts limit ? offset ?', [limit, (page - 1) * limit]);
 }
 
 const getById = (postId) => {
-  return executeQueryOne('select p.*, a.name as author_name, a.email as author_email, a.image as author_image from posts p left join authors a on p.authors_id = a.id where p.id = ?', [postId]);
+  return executeQueryOne('select * from posts where id = ?', [postId]);
+}
+
+const getByAuthorId = (authorId) => {
+  return executeQuery('select * from posts where authors_id = ?', [authorId]);
 }
 
 const create = ({ title, description, post_date, authors_id, categories_id }) => {
@@ -25,10 +29,6 @@ const updateById = (postId, changes) => {
 
 const deleteById = (postId) => {
     return executeQuery('delete from posts where id = ?', [postId]);
-}
-
-const getByAuthorId = (authorId) => {
-  return executeQuery('select p.*, a.name as author_name, a.email as author_email, a.image as author_image from posts p left join authors a on p.authors_id = a.id where authors_id = ?', [authorId]);
 }
 
 module.exports = {

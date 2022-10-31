@@ -5,7 +5,7 @@ const { getAll, getById, create, updateById, deleteById } = require('../../model
 const { getChangesForUpdate } = require('../../helpers/utils');
 
 /* GET authors listing. */
-router.get('/', async (req, res, next) => {
+router.get('/', async (req, res) => {
   try {
     const authors = await getAll();
     res.json(authors);
@@ -15,7 +15,7 @@ router.get('/', async (req, res, next) => {
 });
 
 /* GET author info. */
-router.get('/:authorId', async (req, res, next) => {
+router.get('/:authorId', async (req, res) => {
   try {
     const { authorId } = req.params;
     const author = await getById(parseInt(authorId));
